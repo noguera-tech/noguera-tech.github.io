@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.nogueratech.vaultkey",
+      "sha256_cert_fingerprints": [
+        "6F:62:F2:8D:73:B2:78:2B:5F:15:8F:97:7C:1B:D6:0A:A9:8D:F0:42:FB:2A:4F:F4:84:67:00:7A:7E:58:C9:45"
+      ]
+    }
+  }
+]
