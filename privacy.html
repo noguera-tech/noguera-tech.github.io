@@ -167,7 +167,7 @@
       </div>
 
       <h1>Política de Privacidad</h1>
-      <p class="subtitle">Última actualización: 1 de septiembre de 2026 · Aplicable a VaultKey 2.9.8 (50)</p>
+      <p class="subtitle">Última actualización: 11 de octubre de 2026 · Aplicable a VaultKey 3.0.6 (63)</p>
 
       <section class="section">
         <h2>Introducción</h2>
@@ -204,7 +204,7 @@
 
       <section class="section">
         <h2>Almacenamiento local y cifrado</h2>
-        <p>La información guardada en VaultKey se almacena localmente en el dispositivo del usuario y se protege mediante cifrado. VaultKey utiliza AES-GCM para cifrar la bóveda y mecanismos como PBKDF2, HKDF y un factor local del dispositivo para proteger las claves asociadas a los métodos de acceso y recuperación configurados.</p>
+        <p>La información guardada en VaultKey se almacena localmente en el dispositivo del usuario. La bóveda y sus datos sensibles se protegen mediante cifrado; determinados metadatos técnicos de Autofill se guardan localmente fuera de la bóveda, como se explica en el apartado de Autofill. VaultKey utiliza AES-GCM para cifrar la bóveda y mecanismos como PBKDF2, HKDF y un factor local del dispositivo para proteger las claves asociadas a los métodos de acceso y recuperación configurados.</p>
         <ul>
           <li>El contenido de la bóveda no se envía a servidores propios de VaultKey.</li>
           <li>VaultKey no vende los datos del usuario.</li>
@@ -240,6 +240,19 @@
           <li>Los respaldos deben conservarse en lugares seguros.</li>
           <li>Los archivos importados deben pertenecer al usuario.</li>
           <li>Un archivo incorrecto, dañado o incompatible puede no ser aceptado por la aplicación.</li>
+          <li>El archivo CSV lo elige el usuario y se procesa localmente en el dispositivo. Un CSV de contraseñas contiene las credenciales sin cifrar, por lo que se recomienda eliminarlo de forma segura después de importarlo.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Autocompletado (Autofill)</h2>
+        <p>Si el usuario lo activa en los ajustes de Android, VaultKey puede funcionar como servicio de Autofill para apps y navegadores compatibles.</p>
+        <ul>
+          <li>Android proporciona a VaultKey la información sobre la estructura del formulario necesaria para determinar si puede ofrecer una credencial, como los campos presentes y la app o el sitio web que la solicita.</li>
+          <li>En formularios web, VaultKey puede ofrecer rellenar credenciales y también guardar el usuario y la contraseña introducidos. La entrega de una credencial y su guardado definitivo en la bóveda requieren la autenticación prevista por VaultKey.</li>
+          <li>El sitio web asociado a una credencial puede utilizarse para decidir cuándo ofrecerla.</li>
+          <li>Para ello, VaultKey mantiene localmente ciertos metadatos de asociación de Autofill fuera de la bóveda cifrada, como una referencia interna de la credencial y el sitio web o la identidad de la app asociados. Estos metadatos no contienen la contraseña y se guardan en el almacenamiento privado de la aplicación, excluido de las copias de seguridad.</li>
+          <li>Según la revisión del código de esta versión, estos metadatos no se envían fuera del dispositivo.</li>
         </ul>
       </section>
 
@@ -254,12 +267,12 @@
           <li>La fecha, la hora y la referencia interna necesarias para gestionar cada recordatorio permanecen vinculadas a la entrada cifrada. Android conserva únicamente la información mínima necesaria para programar y mostrar el aviso.</li>
           <li>Al eliminar una entrada, quitar su recordatorio o borrar los datos de la aplicación, VaultKey cancela los avisos asociados cuando el sistema lo permite.</li>
         </ul>
-        <p>La entrega puede verse afectada por permisos revocados, restricciones de batería, reinicios, ajustes del fabricante o decisiones del sistema operativo. VaultKey vuelve a programar los recordatorios futuros al abrir y desbloquear la bóveda.</p>
+        <p>La entrega puede verse afectada por permisos revocados, restricciones de batería, reinicios, ajustes del fabricante o decisiones del sistema operativo. VaultKey vuelve a programar los recordatorios futuros al abrir y desbloquear la bóveda y, después de reiniciar el teléfono, también de forma automática.</p>
       </section>
 
       <section class="section">
         <h2>APK local y versión web alojada</h2>
-        <p>La aplicación Android 2.9.8 (50) carga su interfaz WebView desde archivos incluidos localmente en el APK mediante un origen interno seguro. El uso ordinario de la bóveda no requiere descargar la interfaz desde el sitio web. La conexión a internet sí es necesaria para funciones externas solicitadas por el usuario, como Google Drive, abrir enlaces o acceder a Google Play.</p>
+        <p>La aplicación Android 3.0.6 (63) carga su interfaz WebView desde archivos incluidos localmente en el APK mediante un origen interno seguro. El uso ordinario de la bóveda no requiere descargar la interfaz desde el sitio web. La conexión a internet sí es necesaria para funciones externas como Google Drive, abrir enlaces y Google Play. La app consulta a Google Play si hay actualizaciones disponibles al abrirse o regresar a primer plano; la descarga flexible requiere la aceptación del usuario y el reinicio se ofrece cuando está lista.</p>
         <p>VaultKey también dispone de una versión web independiente alojada en <a href="https://nogueratech.app/" rel="noopener noreferrer">nogueratech.app</a>. Al visitarla, el proveedor de alojamiento y los servicios de red intermedios pueden tratar datos técnicos como la dirección IP, fecha y hora, cabeceras y registros de seguridad conforme a sus propias políticas.</p>
         <ul>
           <li>Noguera Technologies no utiliza esta información para publicidad, seguimiento de usuarios ni elaboración de perfiles.</li>
@@ -270,20 +283,22 @@
 
       <section class="section">
         <h2>Acceso al dispositivo y funciones utilizadas</h2>
-        <p>En Android 2.9.8 (50), VaultKey declara los siguientes permisos:</p>
+        <p>En Android 3.0.6 (63), VaultKey declara los siguientes permisos:</p>
         <ul>
           <li><strong>Cámara:</strong> permiso solicitado en tiempo de ejecución únicamente cuando el usuario inicia la captura de un adjunto mediante CameraX. La cámara es una función opcional.</li>
-          <li><strong>Internet:</strong> para Google Identity/Drive, revocar autorizaciones y abrir o consultar recursos externos solicitados. La interfaz principal del APK se carga localmente.</li>
+          <li><strong>Internet:</strong> para Google Identity/Drive, revocar autorizaciones, consultar actualizaciones en Google Play y abrir o consultar recursos externos solicitados. La interfaz principal del APK se carga localmente.</li>
           <li><strong>Vibración:</strong> para la respuesta háptica de la interfaz.</li>
           <li><strong>Notificaciones:</strong> para mostrar los recordatorios que el usuario programe. En versiones recientes de Android requiere consentimiento en tiempo de ejecución.</li>
           <li><strong>Alarmas exactas:</strong> para intentar entregar recordatorios en la fecha y hora elegidas. Android gestiona esta autorización especial desde los ajustes del sistema.</li>
+          <li><strong>Arranque del dispositivo:</strong> para volver a programar los recordatorios pendientes después de reiniciar el teléfono. Solo usa la fecha y hora guardadas de cada recordatorio; no accede al contenido cifrado de la bóveda.</li>
         </ul>
         <p>VaultKey no declara permiso general para leer fotos, vídeos o todo el almacenamiento. La selección y creación de archivos se delega en el selector de documentos de Android, que concede acceso solo a los elementos elegidos por el usuario. La autenticación biométrica se presenta mediante Android y no concede a VaultKey acceso a datos biométricos.</p>
+        <p>Además de estos permisos, VaultKey declara un servicio de Autofill protegido por Android. No es un permiso que la app solicite al usuario: VaultKey solo participa como servicio de autocompletado cuando el usuario lo selecciona y activa en los ajustes de Android.</p>
       </section>
 
       <section class="section">
         <h2>Protección visual</h2>
-        <p>Cuando VaultKey pasa a segundo plano o pierde el foco, puede mostrar una pantalla de privacidad para reducir el riesgo de que el contenido de la bóveda aparezca en la vista de aplicaciones recientes. También puede bloquear automáticamente la sesión según el tiempo configurado. VaultKey no afirma bloquear todas las capturas de pantalla. Estas medidas reducen la exposición accidental, pero no constituyen una garantía absoluta frente a dispositivos comprometidos, cámaras externas u otros métodos de captura.</p>
+        <p>Cuando VaultKey pasa a segundo plano o pierde el foco, puede mostrar una pantalla de privacidad para reducir el riesgo de que el contenido de la bóveda aparezca en la vista de aplicaciones recientes. En Android 13 o posterior, además pide al sistema que no guarde una miniatura de la app para esa vista. También puede bloquear automáticamente la sesión según el tiempo configurado. VaultKey no afirma bloquear todas las capturas de pantalla. Estas medidas reducen la exposición accidental, pero no constituyen una garantía absoluta frente a dispositivos comprometidos, cámaras externas u otros métodos de captura.</p>
       </section>
 
       <section class="section">
