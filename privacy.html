@@ -167,7 +167,7 @@
       </div>
 
       <h1>Política de Privacidad</h1>
-      <p class="subtitle">Última actualización: 11 de octubre de 2026 · Aplicable a VaultKey 3.0.6 (63)</p>
+      <p class="subtitle">Última actualización: 7 de noviembre de 2026 · Aplicable a VaultKey 3.0.12 (69)</p>
 
       <section class="section">
         <h2>Introducción</h2>
@@ -193,7 +193,7 @@
       <section class="section">
         <h2>Biometría opcional en Android</h2>
         <p>En la aplicación Android compatible, el usuario puede activar voluntariamente el desbloqueo biométrico. La autenticación la realiza Android mediante su interfaz protegida y el almacén seguro de claves del dispositivo. VaultKey no recibe, recopila, almacena ni transmite huellas dactilares, imágenes faciales, plantillas biométricas ni otros datos biométricos.</p>
-        <p>VaultKey recibe únicamente el resultado de la autenticación y utiliza una clave criptográfica protegida por Android para habilitar el acceso. La función depende de la compatibilidad, la configuración y la seguridad biométrica del dispositivo; puede quedar deshabilitada si cambia la biometría registrada o se invalida la clave. El PIN y los métodos de recuperación siguen siendo responsabilidad del usuario. Esta función nativa no está disponible en la versión web alojada.</p>
+        <p>VaultKey recibe únicamente el resultado de la autenticación y utiliza una clave criptográfica protegida por Android para habilitar el acceso. La función depende de la compatibilidad, la configuración y la seguridad biométrica del dispositivo; puede quedar deshabilitada si cambia la biometría registrada o se invalida la clave. El PIN y los métodos de recuperación siguen siendo responsabilidad del usuario.</p>
       </section>
 
       <section class="section">
@@ -207,6 +207,7 @@
         <p>La información guardada en VaultKey se almacena localmente en el dispositivo del usuario. La bóveda y sus datos sensibles se protegen mediante cifrado; determinados metadatos técnicos de Autofill se guardan localmente fuera de la bóveda, como se explica en el apartado de Autofill. VaultKey utiliza AES-GCM para cifrar la bóveda y mecanismos como PBKDF2, HKDF y un factor local del dispositivo para proteger las claves asociadas a los métodos de acceso y recuperación configurados.</p>
         <ul>
           <li>El contenido de la bóveda no se envía a servidores propios de VaultKey.</li>
+          <li>Para mostrar los elementos usados recientemente, VaultKey guarda en el dispositivo una lista cifrada con la referencia interna de cada elemento abierto y la hora de uso. Esta lista no se incluye en los respaldos, no sale del dispositivo y se elimina al borrar la bóveda.</li>
           <li>VaultKey no vende los datos del usuario.</li>
           <li>El usuario es responsable de mantener la confidencialidad de su PIN, dispositivo y respaldos.</li>
         </ul>
@@ -215,6 +216,7 @@
       <section class="section">
         <h2>PIN, recuperación y pérdida de acceso</h2>
         <p>El PIN se utiliza para proteger y desbloquear la bóveda. Si el usuario pierde el PIN y no dispone de un método de recuperación válido, es posible que no pueda recuperar el acceso a la información cifrada. VaultKey no puede garantizar la recuperación de datos si técnicamente no existe una recuperación válida configurada.</p>
+        <p>En la aplicación Android, el PIN queda además vinculado a una clave protegida por el almacén seguro de claves de ese dispositivo, de modo que solo puede comprobarse en él. Las copias de seguridad no incluyen el PIN: al restaurar una copia, el PIN se crea de nuevo en el dispositivo.</p>
       </section>
 
       <section class="section">
@@ -225,7 +227,7 @@
           <li>El respaldo se almacena cifrado. VaultKey no envía el PIN ni la clave de descifrado a Google Drive.</li>
           <li>Google Drive actúa como proveedor de almacenamiento externo para el respaldo cifrado.</li>
           <li>Google puede tratar los datos de cuenta, autorización y uso necesarios para iniciar sesión, mostrar el consentimiento y prestar Drive, conforme a sus propias políticas. VaultKey utiliza la cuenta y el token de acceso para ejecutar las operaciones solicitadas y no incorpora el token a la bóveda ni a los respaldos.</li>
-          <li>En Android, el token de acceso se mantiene en memoria durante la sesión. En la versión web alojada, el mecanismo web de Google Identity proporciona la autorización necesaria para Drive.</li>
+          <li>En Android, el token de acceso se mantiene en memoria durante la sesión.</li>
           <li>El usuario puede desconectar Google Drive desde la aplicación. La desconexión elimina la autorización local, pero no borra automáticamente las copias que ya estén almacenadas en Google Drive.</li>
           <li>El respaldo puede guardarse en una carpeta visible del usuario en Google Drive, según la configuración usada por VaultKey.</li>
           <li>VaultKey puede realizar una limpieza automática de copias antiguas cuando la función de respaldo o sincronización esté activa, para mantener el almacenamiento organizado.</li>
@@ -250,6 +252,7 @@
         <ul>
           <li>Android proporciona a VaultKey la información sobre la estructura del formulario necesaria para determinar si puede ofrecer una credencial, como los campos presentes y la app o el sitio web que la solicita.</li>
           <li>En formularios web, VaultKey puede ofrecer rellenar credenciales y también guardar el usuario y la contraseña introducidos. La entrega de una credencial y su guardado definitivo en la bóveda requieren la autenticación prevista por VaultKey.</li>
+          <li>En formularios de registro web, VaultKey puede ofrecer crear una contraseña segura. La contraseña se genera en el dispositivo y se guarda en la bóveda, tras la autenticación prevista, antes de rellenarse.</li>
           <li>El sitio web asociado a una credencial puede utilizarse para decidir cuándo ofrecerla.</li>
           <li>Para ello, VaultKey mantiene localmente ciertos metadatos de asociación de Autofill fuera de la bóveda cifrada, como una referencia interna de la credencial y el sitio web o la identidad de la app asociados. Estos metadatos no contienen la contraseña y se guardan en el almacenamiento privado de la aplicación, excluido de las copias de seguridad.</li>
           <li>Según la revisión del código de esta versión, estos metadatos no se envían fuera del dispositivo.</li>
@@ -271,19 +274,18 @@
       </section>
 
       <section class="section">
-        <h2>APK local y versión web alojada</h2>
-        <p>La aplicación Android 3.0.6 (63) carga su interfaz WebView desde archivos incluidos localmente en el APK mediante un origen interno seguro. El uso ordinario de la bóveda no requiere descargar la interfaz desde el sitio web. La conexión a internet sí es necesaria para funciones externas como Google Drive, abrir enlaces y Google Play. La app consulta a Google Play si hay actualizaciones disponibles al abrirse o regresar a primer plano; la descarga flexible requiere la aceptación del usuario y el reinicio se ofrece cuando está lista.</p>
-        <p>VaultKey también dispone de una versión web independiente alojada en <a href="https://nogueratech.app/" rel="noopener noreferrer">nogueratech.app</a>. Al visitarla, el proveedor de alojamiento y los servicios de red intermedios pueden tratar datos técnicos como la dirección IP, fecha y hora, cabeceras y registros de seguridad conforme a sus propias políticas.</p>
+        <h2>Interfaz local y sitio web informativo</h2>
+        <p>La aplicación Android 3.0.12 (69) carga su interfaz WebView desde archivos incluidos localmente en el APK mediante un origen interno seguro. El uso ordinario de la bóveda no requiere descargar la interfaz desde el sitio web. La conexión a internet sí es necesaria para funciones externas como Google Drive, abrir enlaces y Google Play. La app consulta a Google Play si hay actualizaciones disponibles al abrirse o regresar a primer plano; la descarga flexible requiere la aceptación del usuario y el reinicio se ofrece cuando está lista.</p>
+        <p>Esta política y las condiciones de uso se publican también en el sitio web informativo <a href="https://nogueratech.app/" rel="noopener noreferrer">nogueratech.app</a>, que no ofrece una versión web de la bóveda. Al visitarlo, el proveedor de alojamiento y los servicios de red intermedios pueden tratar datos técnicos como la dirección IP, fecha y hora, cabeceras y registros de seguridad conforme a sus propias políticas.</p>
         <ul>
           <li>Noguera Technologies no utiliza esta información para publicidad, seguimiento de usuarios ni elaboración de perfiles.</li>
-          <li>El contenido descifrado de la bóveda, el PIN y las claves de descifrado no se envían al proveedor de alojamiento por el mero hecho de cargar la web.</li>
-          <li>La versión web depende del navegador y del alojamiento para su disponibilidad, caché y almacenamiento local.</li>
+          <li>Visitar el sitio web no envía al proveedor de alojamiento el contenido de la bóveda, el PIN ni las claves de descifrado.</li>
         </ul>
       </section>
 
       <section class="section">
         <h2>Acceso al dispositivo y funciones utilizadas</h2>
-        <p>En Android 3.0.6 (63), VaultKey declara los siguientes permisos:</p>
+        <p>En Android 3.0.12 (69), VaultKey declara los siguientes permisos:</p>
         <ul>
           <li><strong>Cámara:</strong> permiso solicitado en tiempo de ejecución únicamente cuando el usuario inicia la captura de un adjunto mediante CameraX. La cámara es una función opcional.</li>
           <li><strong>Internet:</strong> para Google Identity/Drive, revocar autorizaciones, consultar actualizaciones en Google Play y abrir o consultar recursos externos solicitados. La interfaz principal del APK se carga localmente.</li>
@@ -303,7 +305,7 @@
 
       <section class="section">
         <h2>Compartición de datos con terceros</h2>
-        <p>VaultKey no vende, alquila ni comparte el contenido privado de la bóveda con terceros. El APK puede interactuar con Google Identity y Google Drive si el usuario activa voluntariamente los respaldos cifrados. La versión web se comunica además con su proveedor de alojamiento al cargarse. El uso de servicios externos está sujeto a las políticas de sus proveedores.</p>
+        <p>VaultKey no vende, alquila ni comparte el contenido privado de la bóveda con terceros. El APK puede interactuar con Google Identity y Google Drive si el usuario activa voluntariamente los respaldos cifrados. El uso de servicios externos está sujeto a las políticas de sus proveedores.</p>
       </section>
 
       <section class="section">
